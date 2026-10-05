@@ -209,6 +209,13 @@ p{margin:0 0 1em}
   .method-line i{height:100%!important;inset-inline:0;width:0;transition:width 1.8s var(--ease)}
   .method-steps{grid-template-columns:repeat(3,1fr);gap:2.4rem}
 }
+@media(max-width:63.99rem){
+  .method-line{display:none}
+  .method-steps{gap:2.2rem}
+  .mstep{gap:1rem}
+  .mstep-icon{inline-size:5.2rem;block-size:5.2rem;border-radius:1.35rem}
+  .mstep-icon svg{inline-size:2.2rem;block-size:2.2rem}
+}
 
 /* ============ ABOUT ============ */
 #about{background:var(--paper-2);border-block:1px solid var(--line)}
@@ -380,7 +387,7 @@ p{margin:0 0 1em}
   <div class="hero-aurora" aria-hidden="true"></div>
   <div class="hero-grid-lines" aria-hidden="true"></div>
   <div class="wrap hero-inner">
-    <img class="hero-logo fade d1" src="assets/logo-on-white.png" alt="Rise Personal" width="420" height="126">
+    <img class="hero-logo fade d1" src="assets/logo-on-black.png" alt="Rise Personal" width="420" height="126">
     <p class="eyebrow fade d1">Personal Branding Agency · Dubai</p>
     <h1 class="fade d2">Your personal brand is a journey of self-discovery <span class="grad-anim">— let’s explore it together.</span></h1>
     <p class="hero-tag fade d3">Unleash your potential, rise to new heights — with self-discovery, archetype work and wellness, into a brand that is unmistakably you.</p>
@@ -489,7 +496,7 @@ p{margin:0 0 1em}
             <span class="mstep-k">Stage 02</span>
             <h3>The Blueprint Report</h3>
             <p>Your passions, voice and values take shape as your Personal Blueprint — your unique print, with a wellness plan that keeps the brand alive.</p>
-            <span class="mchip">Coming soon</span>
+            <a class="mchip" href="quiz.html">Join the waitlist →</a>
           </div>
         </li>
         <li class="mstep rv" style="--i:2">
