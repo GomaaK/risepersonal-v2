@@ -1,0 +1,54 @@
+# Rise Personal
+
+> Rise Personal is a premium personal branding agency in Dubai, UAE. We explore your passions, understand your voice and interpret your values to create your unique print — blending self-discovery, brand archetype work and wellness into every brand we build. Our clients are professionals and founders who want the market to see the real them: clearly, consistently, and memorably.
+
+## Services
+
+- **Personal Blueprint**: the foundation — we explore your passions, voice and values, and shape them into your unique print.
+- **Message Mastery**: we refine your message until it carries your voice with clarity, built for real impact.
+- **Visual Identity**: a visual language designed around you, so the branding fits your identity — never the other way around.
+- **Personal Amplification**: mastery of media channels to amplify your impact and make you the focal point of your market.
+
+## Free assessment: The Snapshot
+
+The Snapshot is a free brand archetype test — 20 questions, about 4 minutes — that reveals your dominant brand archetype (one of 12, from Sage to Ruler to Magician), your 3 Words (the three feelings people should take away from meeting your brand), and your Wellness × Brand pairing. No fee, no signup cost; results are delivered instantly in the browser.
+
+- Take it here: https://gomaak.github.io/risepersonal-v2/quiz.html
+
+## Key facts
+
+- What we do: personal branding agency and personal brand consultancy for professionals
+- Where: Dubai, United Arab Emirates (serving clients across the UAE and the wider region)
+- Contact: Authentic@risepersonal.com
+- Pricing: shared after a first conversation about your goals; the Snapshot assessment is free
+
+## The Journal (articles)
+
+- What Is Personal Branding? A Dubai Professional's Guide: https://gomaak.github.io/risepersonal-v2/what-is-personal-branding-dubai.html
+- The 3 Words That Change How People See You: https://gomaak.github.io/risepersonal-v2/three-words-personal-brand.html
+- Which Archetype Leads Your Brand?: https://gomaak.github.io/risepersonal-v2/brand-archetypes-guide.html
+- Personal Branding Is a Wellness Practice: https://gomaak.github.io/risepersonal-v2/personal-branding-wellness-practice.html
+
+## The Lineage (master personal brands, history to today)
+
+The Lineage profiles 12 of the strongest personal brands ever — grouped as History (Cleopatra VII, Leonardo da Vinci, Benjamin Franklin, Muhammad Ali, Coco Chanel), Modern (Oprah Winfrey, Steve Jobs, Cristiano Ronaldo, Jay Shetty, Mo Gawdat) and Arab Legends (Umm Kulthum, Sheikh Zayed bin Sultan Al Nahyan). Each profile covers their brand move, their real impact by numbers (every figure cited to Britannica, Forbes, Guinness World Records, Reuters, TIME, official foundations or company results) and the lesson to apply to your own brand.
+
+- The Lineage index: https://gomaak.github.io/risepersonal-v2/lineage.html
+- Cleopatra VII — The Sovereign: https://gomaak.github.io/risepersonal-v2/lineage-cleopatra-vii.html
+- Leonardo da Vinci — The Creator: https://gomaak.github.io/risepersonal-v2/lineage-leonardo-da-vinci.html
+- Benjamin Franklin — The Civic Sage: https://gomaak.github.io/risepersonal-v2/lineage-benjamin-franklin.html
+- Muhammad Ali — The Self-Named Hero: https://gomaak.github.io/risepersonal-v2/lineage-muhammad-ali.html
+- Coco Chanel — The Rule Rewriter: https://gomaak.github.io/risepersonal-v2/lineage-coco-chanel.html
+- Oprah Winfrey — The Confessional Host: https://gomaak.github.io/risepersonal-v2/lineage-oprah-winfrey.html
+- Steve Jobs — The Product Magician: https://gomaak.github.io/risepersonal-v2/lineage-steve-jobs.html
+- Cristiano Ronaldo — The Relentless Professional: https://gomaak.github.io/risepersonal-v2/lineage-cristiano-ronaldo.html
+- Jay Shetty — The Wisdom Translator: https://gomaak.github.io/risepersonal-v2/lineage-jay-shetty.html
+- Mo Gawdat — The Mission Engineer: https://gomaak.github.io/risepersonal-v2/lineage-mo-gawdat.html
+- Umm Kulthum — The People's Voice: https://gomaak.github.io/risepersonal-v2/lineage-umm-kulthum.html
+- Sheikh Zayed bin Sultan Al Nahyan — The Nation Builder: https://gomaak.github.io/risepersonal-v2/lineage-sheikh-zayed.html
+
+## Links
+
+- Home: https://gomaak.github.io/risepersonal-v2/
+- The Snapshot (free quiz): https://gomaak.github.io/risepersonal-v2/quiz.html
+- Sitemap: https://gomaak.github.io/risepersonal-v2/sitemap.xml
