@@ -247,15 +247,14 @@ p{margin:0 0 1em}
     <nav aria-label="Primary">
       <ul class="nav-links">
         <li><a href="index.html#about">About</a></li>
-        <li><a class="nav-quiz" href="quiz.html" aria-current="page">Discover Yourself<span class="nav-chip">Free</span></a></li>
         <li><a href="index.html#services">Services</a></li>
-        <li><a href="index.html#why">Why Rise</a></li>
+        <li><a href="index.html#markets">Where we work</a></li>
+        <li><a href="lineage.html">The Lineage</a></li>
         <li><a href="index.html#journal">Journal</a></li>
         <li><a href="index.html#contact">Contact</a></li>
       </ul>
     </nav>
-    <a class="btn btn-primary nav-cta nav-contact" href="index.html#contact">Contact</a>
-    <a class="btn btn-accent nav-cta nav-start" href="#top">Take the Snapshot</a>
+    <a class="btn btn-accent nav-cta" href="quiz.html" aria-current="page"><span class="cta-long">Take the free Snapshot</span><span class="cta-short">Free Snapshot</span></a>
   </div>
 </header>
 
@@ -301,6 +300,7 @@ p{margin:0 0 1em}
         <span class="qpct" id="qpct">5%</span>
       </div>
       <div class="qbar" role="progressbar" aria-label="Snapshot progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="5" id="qbar"><div class="qbar-fill" id="qfill"></div></div>
+      <div class="qnote" id="qnote" aria-live="polite"></div>
       <div class="qcard" id="qcard"><!-- rendered by JS --></div>
       <p class="qhint" id="qhint">Tip: keys 1–5 answer, ← goes back.</p>
     </div>
@@ -468,10 +468,19 @@ var RP_CONFIG = { endpoint: null }; // e.g. "https://formspree.io/f/xxxxx"
   /* ---------- Screens ---------- */
   var screens = { intro: document.getElementById("screen-intro"), quiz: document.getElementById("screen-quiz"), email: document.getElementById("screen-email"), results: document.getElementById("screen-results") };
   function show(name) {
-    Object.keys(screens).forEach(function (k) { screens[k].classList.toggle("active", k === name); });
-    var top = document.getElementById("top");
-    if (top && typeof top.scrollIntoView === "function") top.scrollIntoView({ behavior: "auto" });
-    window.scrollTo(0, 0);
+    var cur = null;
+    Object.keys(screens).forEach(function (k) { if (screens[k].classList.contains("active")) cur = screens[k]; });
+    var next = screens[name];
+    function swap() {
+      Object.keys(screens).forEach(function (k) { screens[k].classList.toggle("active", k === name); });
+      var top = document.getElementById("top");
+      if (top && typeof top.scrollIntoView === "function") top.scrollIntoView({ behavior: "auto" });
+      window.scrollTo(0, 0);
+    }
+    var rm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!cur || cur === next || rm) { swap(); return; }
+    cur.classList.add("leaving");
+    setTimeout(function () { cur.classList.remove("leaving"); swap(); }, 200);
   }
 
   /* ---------- Intro / resume ---------- */
@@ -512,47 +521,123 @@ var RP_CONFIG = { endpoint: null }; // e.g. "https://formspree.io/f/xxxxx"
   var qbar = document.getElementById("qbar");
   var qfill = document.getElementById("qfill"); /* FIX v1.0.1: was "qbar-fill" (class, not id) — null crash killed renderStep */
   var qhint = document.getElementById("qhint");
-  var lock = false;
+  var lock = false, curIdx = 0, noteTimer = null, shownPct = 0, pctTimer = null;
+  var reduced = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var qnote = document.getElementById("qnote");
+  var TAGS = { O: "Ideas & imagination", C: "Focus & follow-through", E: "Energy & people", A: "Warmth & trust", N: "Steadiness under pressure" };
+  var NOTES = {
+    5: "A quarter done. First instincts are the most honest ones.",
+    10: "Halfway. Your pattern is starting to show.",
+    15: "Three quarters in. Five to go.",
+    19: "Last statement. Then two quick choices.",
+    20: "Final choices: how you want people to feel and remember you."
+  };
 
-  function renderStep(i) {
-    if (i < 0) i = 0;
-    if (i >= TOTAL_STEPS) { state.step = TOTAL_STEPS; save(); show("email"); return; }
-    lock = false;
-    var pct = Math.round(((i + 1) / TOTAL_STEPS) * 100);
-    qfill.style.width = pct + "%";
-    qbar.setAttribute("aria-valuenow", String(pct));
-    qpct.textContent = pct + "%";
-    qhint.style.display = i < QUESTIONS.length ? "" : "none";
-
+  function stepHTML(i) {
+    var html;
     if (i < QUESTIONS.length) {
       var q = QUESTIONS[i];
-      qlabel.textContent = "Question " + (i + 1) + " of 20";
-      var html = '<span class="qtag">' + { O: "Ideas & imagination", C: "Focus & follow-through", E: "Energy & people", A: "Warmth & trust", N: "Steadiness under pressure" }[q.f] + "</span>";
+      html = '<span class="qtag">' + TAGS[q.f] + "</span>";
       html += '<p class="qtext" id="qtext">' + q.t + "</p>";
       html += '<div class="likert" role="group" aria-labelledby="qtext">';
       LIKERT.forEach(function (label, idx) {
         var v = idx + 1;
         var sel = state.answers[i] === v ? " selected" : "";
-        html += '<button type="button" class="lk' + sel + '" data-i="' + i + '" data-v="' + v + '"><span class="k">' + v + "</span><span class=\"dot\"></span><span>" + label + "</span></button>";
+        html += '<button type="button" class="lk' + sel + '" style="--n:' + idx + '" data-i="' + i + '" data-v="' + v + '"><span class="k">' + v + '</span><span class="dot"></span><span>' + label + "</span></button>";
       });
       html += "</div>";
-      html += navRow(i);
-      qcard.innerHTML = html;
     } else {
       var p = PICKS[i - QUESTIONS.length];
-      qlabel.textContent = "Final choices";
-      var html2 = '<span class="qtag">' + p.tag + "</span>";
-      html2 += '<p class="qtext" id="qtext">' + p.t + "</p>";
-      html2 += '<div class="wordpool" role="group" aria-labelledby="qtext">';
-      p.opts.forEach(function (o) {
+      html = '<span class="qtag">' + p.tag + "</span>";
+      html += '<p class="qtext" id="qtext">' + p.t + "</p>";
+      html += '<div class="wordpool" role="group" aria-labelledby="qtext">';
+      p.opts.forEach(function (o, idx) {
         var sel = state.picks[p.id] === o.k ? " selected" : "";
-        html2 += '<button type="button" class="wp' + sel + '" data-pick="' + p.id + '" data-k="' + o.k + '">' + o.label + "<small>" + o.sub + "</small></button>";
+        html += '<button type="button" class="wp' + sel + '" style="--n:' + idx + '" data-pick="' + p.id + '" data-k="' + o.k + '">' + o.label + "<small>" + o.sub + "</small></button>";
       });
-      html2 += "</div>";
-      html2 += navRow(i);
-      qcard.innerHTML = html2;
+      html += "</div>";
     }
+    return html + navRow(i);
   }
+
+  function setMeta(i, instant) {
+    var pct = Math.round(((i + 1) / TOTAL_STEPS) * 100);
+    qfill.style.width = pct + "%";
+    qbar.setAttribute("aria-valuenow", String(pct));
+    var label = i < QUESTIONS.length ? "Question " + (i + 1) + " of 20" : "Final choices";
+    qhint.style.display = i < QUESTIONS.length ? "" : "none";
+    clearInterval(pctTimer);
+    if (instant || reduced) { qlabel.textContent = label; qpct.textContent = pct + "%"; shownPct = pct; return; }
+    qlabel.classList.add("swap");
+    setTimeout(function () { qlabel.textContent = label; qlabel.classList.remove("swap"); }, 150);
+    var from = shownPct, t0 = null;
+    function tick(ts) {
+      if (!t0) t0 = ts;
+      var k = Math.min((ts - t0) / 420, 1), e = 1 - Math.pow(1 - k, 3);
+      shownPct = Math.round(from + (pct - from) * e);
+      qpct.textContent = shownPct + "%";
+      if (k < 1) requestAnimationFrame(tick); else { shownPct = pct; qpct.textContent = pct + "%"; }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function hideNote() { clearTimeout(noteTimer); if (qnote) qnote.classList.remove("show"); }
+  function maybeNote(i, dir) {
+    if (!qnote) return;
+    if (dir > 0 && NOTES[i]) {
+      clearTimeout(noteTimer);
+      qnote.textContent = NOTES[i];
+      qnote.classList.add("show");
+      noteTimer = setTimeout(function () { qnote.classList.remove("show"); }, 3200);
+    } else if (dir < 0) { hideNote(); }
+  }
+
+  /* Instant render: used when a screen is entered (begin / resume / retake). */
+  function renderStep(i) {
+    if (i < 0) i = 0;
+    if (i >= TOTAL_STEPS) { state.step = TOTAL_STEPS; save(); show("email"); return; }
+    lock = false; curIdx = i;
+    setMeta(i, true);
+    hideNote();
+    qcard.style.height = "";
+    qcard.innerHTML = '<div class="qinner in" style="--dir:1">' + stepHTML(i) + "</div>";
+  }
+
+  /* Animated move between questions: old content slides out, card height eases to the new
+     content, new content slides in and the options stagger up. dir = +1 forward, -1 back. */
+  function goTo(i, dir) {
+    if (i < 0) i = 0;
+    if (i >= TOTAL_STEPS) { state.step = Math.max(state.step, TOTAL_STEPS); save(); hideNote(); show("email"); return; }
+    if (reduced) { renderStep(i); return; }
+    lock = true; curIdx = i;
+    setMeta(i, false);
+    var old = qcard.firstElementChild;
+    var h0 = qcard.offsetHeight;
+    qcard.style.height = h0 + "px";
+    if (old) { old.style.setProperty("--dir", dir); old.classList.add("out"); }
+    setTimeout(function () {
+      var inner = document.createElement("div");
+      inner.className = "qinner pre";
+      inner.style.setProperty("--dir", dir);
+      inner.innerHTML = stepHTML(i);
+      qcard.innerHTML = "";
+      qcard.appendChild(inner);
+      qcard.style.height = "auto";
+      var h1 = qcard.offsetHeight;
+      qcard.style.height = h0 + "px";
+      void qcard.offsetHeight;
+      qcard.style.height = h1 + "px";
+      requestAnimationFrame(function () { requestAnimationFrame(function () { inner.classList.remove("pre"); inner.classList.add("in"); }); });
+      maybeNote(i, dir);
+      setTimeout(function () { lock = false; }, 300);
+      setTimeout(function () {
+        qcard.style.height = "";
+        var qt = qcard.querySelector(".qtext");
+        if (qt) { qt.setAttribute("tabindex", "-1"); try { qt.focus({ preventScroll: true }); } catch (e) {} }
+      }, 440);
+    }, 210);
+  }
+
   function navRow(i) {
     var back = i > 0 ? '<button type="button" class="backlink" data-back="' + (i - 1) + '">← Back</button>' : "<span></span>";
     return '<div class="qnav">' + back + '<span class="qhint" style="margin:0">Answer with your first instinct.</span></div>';
@@ -561,14 +646,14 @@ var RP_CONFIG = { endpoint: null }; // e.g. "https://formspree.io/f/xxxxx"
   qcard.addEventListener("click", function (ev) {
     var t = ev.target.closest ? ev.target.closest("button") : null;
     if (!t || lock) return;
-    if (t.classList.contains("backlink")) { renderStep(parseInt(t.dataset.back, 10)); return; }
+    if (t.classList.contains("backlink")) { goTo(parseInt(t.dataset.back, 10), -1); return; }
     if (t.classList.contains("lk")) {
       var i = parseInt(t.dataset.i, 10), v = parseInt(t.dataset.v, 10);
       state.answers[i] = v; state.step = Math.max(state.step, i + 1); save();
       qcard.querySelectorAll(".lk").forEach(function (b) { b.classList.remove("selected"); });
       t.classList.add("selected");
       lock = true;
-      setTimeout(function () { renderStep(i + 1); }, 240);
+      setTimeout(function () { lock = false; goTo(i + 1, 1); }, reduced ? 120 : 340);
     } else if (t.classList.contains("wp")) {
       var pickId = t.dataset.pick, k = t.dataset.k;
       state.picks[pickId] = k;
@@ -577,23 +662,22 @@ var RP_CONFIG = { endpoint: null }; // e.g. "https://formspree.io/f/xxxxx"
       qcard.querySelectorAll(".wp").forEach(function (b) { b.classList.remove("selected"); });
       t.classList.add("selected");
       lock = true;
-      setTimeout(function () { renderStep(idx + 1); }, 240);
+      setTimeout(function () { lock = false; goTo(idx + 1, 1); }, reduced ? 120 : 380);
     }
   });
 
   document.addEventListener("keydown", function (ev) {
     if (!screens.quiz.classList.contains("active") || lock) return;
-    var i = currentIdx();
-    if (i >= QUESTIONS.length) return;
+    if (ev.target && /^(INPUT|TEXTAREA|SELECT)$/.test(ev.target.tagName)) return;
     var n = parseInt(ev.key, 10);
-    if (n >= 1 && n <= 5) {
+    if (curIdx < QUESTIONS.length && n >= 1 && n <= 5) {
       var btn = qcard.querySelector('.lk[data-v="' + n + '"]');
       if (btn) btn.click();
-    } else if (ev.key === "ArrowLeft" && i > 0) {
-      renderStep(i - 1);
+    } else if (ev.key === "ArrowLeft" && curIdx > 0) {
+      goTo(curIdx - 1, -1);
     }
   });
-  function currentIdx() { return Math.min(state.step, TOTAL_STEPS - 1); }
+  function currentIdx() { return curIdx; }
 
   /* ---------- Email gate ---------- */
   var emailForm = document.getElementById("email-form");
@@ -824,5 +908,6 @@ var RP_CONFIG = { endpoint: null }; // e.g. "https://formspree.io/f/xxxxx"
 })();
 </script>
 <a class="wa-float" href="https://wa.me/971506832835?text=Hi%20Rise%20Personal,%20I'd%20like%20to%20talk%20about%20personal%20branding." target="_blank" rel="noopener" aria-label="Chat with Rise Personal on WhatsApp"><svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false"><path fill="#fff" d="M16.04 3C8.84 3 3 8.83 3 16.01c0 2.3.6 4.54 1.74 6.51L3 29l6.65-1.7a13.03 13.03 0 0 0 6.39 1.63h.01C23.24 28.93 29 23.1 29 15.92 29 8.83 23.24 3 16.04 3Zm0 23.7h-.01a10.7 10.7 0 0 1-5.45-1.49l-.39-.23-3.95 1.01 1.05-3.85-.25-.4a10.67 10.67 0 0 1-1.64-5.73c0-5.9 4.82-10.7 10.74-10.7 5.74 0 10.62 4.4 10.62 10.7 0 5.91-4.81 10.69-10.72 10.69Zm5.88-8c-.32-.16-1.9-.94-2.2-1.05-.29-.11-.5-.16-.71.16-.21.32-.82 1.05-1.01 1.27-.18.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.9-1.78-2.22-.18-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.18.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.71-1.72-.98-2.35-.26-.62-.52-.53-.71-.54h-.61c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.66s1.14 3.09 1.3 3.3c.16.21 2.24 3.41 5.42 4.78.76.33 1.35.52 1.81.67.76.24 1.45.21 2 .13.61-.09 1.9-.78 2.16-1.53.27-.75.27-1.4.19-1.53-.08-.13-.29-.21-.61-.37Z"/></svg><span class="wa-label">WhatsApp</span></a>
+<script src="assets/site.js" defer></script>
 </body>
 </html>
