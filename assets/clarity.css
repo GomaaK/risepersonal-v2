@@ -190,3 +190,60 @@ body .lineage-nav .dir{font-size:.8rem}
 .wa-float{background:#0F766E}
 .wa-float:hover{background:#0B5F58}
 .wa-float:focus-visible{box-shadow:0 0 0 6px #0F766E}
+
+/* ============ NAV: one bar for every page, hamburger below 70rem ============ */
+.nav-inner{gap:.75rem}
+.nav-links{display:none;gap:1.5rem}
+.nav-links a{white-space:nowrap;font-size:.95rem;font-weight:500}
+.nav-links a[aria-current="page"]{color:var(--accent-ink);border-block-end-color:var(--accent-line)}
+@media(min-width:70rem){.nav-links{display:flex}.nav-toggle{display:none!important}.nav-panel{display:none!important}}
+@media(min-width:56rem) and (max-width:69.99rem){.nav-links{display:none}}
+.nav-cta{display:inline-flex;margin-inline-start:auto;white-space:nowrap}
+@media(min-width:70rem){.nav-cta{margin-inline-start:0}}
+.nav-cta .cta-short{display:none}
+@media(max-width:36rem){.nav-cta .cta-long{display:none}.nav-cta .cta-short{display:inline}}
+.nav-toggle{display:inline-grid;place-items:center;inline-size:2.9rem;block-size:2.9rem;border-radius:.85rem;border:1px solid var(--line);background:rgba(255,255,255,.7);color:var(--ink);cursor:pointer;padding:0;transition:background-color .2s,border-color .2s}
+.nav-toggle:hover{border-color:var(--accent-line);background:#fff}
+.nav-toggle .bars{position:relative;inline-size:1.25rem;block-size:.95rem;display:block}
+.nav-toggle .bars i{position:absolute;inset-inline:0;block-size:2px;border-radius:2px;background:currentColor;transition:transform .28s var(--ease),opacity .2s,top .28s var(--ease)}
+.nav-toggle .bars i:nth-child(1){top:0}.nav-toggle .bars i:nth-child(2){top:calc(50% - 1px)}.nav-toggle .bars i:nth-child(3){top:calc(100% - 2px)}
+.nav-toggle[aria-expanded="true"] .bars i:nth-child(1){top:calc(50% - 1px);transform:rotate(45deg)}
+.nav-toggle[aria-expanded="true"] .bars i:nth-child(2){opacity:0}
+.nav-toggle[aria-expanded="true"] .bars i:nth-child(3){top:calc(50% - 1px);transform:rotate(-45deg)}
+.nav-panel{position:absolute;inset-inline:0;inset-block-start:100%;background:#fff;border-block-end:1px solid var(--line);box-shadow:0 24px 40px -24px rgba(26,26,26,.45);opacity:0;transform:translateY(-8px);transition:opacity .24s ease,transform .26s var(--ease)}
+.nav-panel.open{opacity:1;transform:none}
+.nav-panel[hidden]{display:none}
+.nav-panel ul{list-style:none;margin:0;padding:.6rem clamp(1.25rem,5vw,2.5rem) 1.2rem;max-width:71rem;margin-inline:auto}
+.nav-panel li+li{border-block-start:1px solid var(--line)}
+.nav-panel a{display:block;padding:1rem .2rem;font-size:1.15rem;font-weight:600;color:var(--ink);text-decoration:none}
+.nav-panel a[aria-current="page"]{color:var(--accent-ink)}
+.nav-panel a:hover{color:var(--accent-ink)}
+@media(max-width:26rem){.wordmark img{block-size:2.7rem}.nav-cta{padding-inline:.9rem}}
+.intro-card{overflow:hidden}
+
+/* ============ QUIZ: smooth question transitions ============ */
+.qcard{position:relative;transition:height .38s var(--ease),border-color .3s ease,box-shadow .3s ease}
+.qinner{transition:opacity .2s ease,transform .26s var(--ease);will-change:opacity,transform}
+.qinner.out{opacity:0;transform:translateX(calc(var(--dir,1)*-22px))}
+.qinner.pre{opacity:0;transform:translateX(calc(var(--dir,1)*26px))}
+.qinner.pre .lk,.qinner.pre .wp{opacity:0}
+.qinner.in{opacity:1;transform:none;transition:opacity .34s ease,transform .42s var(--ease)}
+.qinner.in .lk,.qinner.in .wp{animation:opt-in .44s var(--ease) both;animation-delay:calc(var(--n,0)*55ms + 90ms)}
+@keyframes opt-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.lk.selected,.wp.selected{animation:pick .34s var(--ease)}
+@keyframes pick{0%{transform:scale(.985)}55%{transform:scale(1.012)}100%{transform:scale(1)}}
+.qtext:focus{outline:none}
+.qlabel,.qpct{transition:opacity .16s ease}
+.qlabel.swap{opacity:0}
+.qbar{margin-block-end:.7rem;block-size:.5rem}
+.qbar-fill{background:var(--grad);transition:inline-size .6s var(--ease)}
+.qnote{min-block-size:1.6rem;margin:0 0 1rem;font-size:.98rem;font-weight:600;color:var(--accent-ink);opacity:0;transform:translateY(4px);transition:opacity .3s ease,transform .3s var(--ease)}
+.qnote.show{opacity:1;transform:none}
+.screen.active.leaving{display:block;animation:q-out .2s ease both}
+@keyframes q-out{to{opacity:0;transform:translateY(-10px)}}
+.tbar i{transition:width 1.1s var(--ease)}
+@media(prefers-reduced-motion:reduce){
+  .qinner,.qinner.in,.qinner.in .lk,.qinner.in .wp,.lk.selected,.wp.selected,.qnote,.qcard{animation:none!important;transition:none!important}
+  .qinner.pre,.qinner.out{opacity:1;transform:none}
+  .qinner.pre .lk,.qinner.pre .wp{opacity:1}
+}
