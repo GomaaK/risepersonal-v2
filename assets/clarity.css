@@ -1,0 +1,192 @@
+/* ============ RISE PERSONAL — CLARITY LAYER (final revision) ============
+   Loaded after each page's inline styles. Fixes: invisible hero headline, low-contrast
+   blue text, tiny labels, cramped display type, tap targets, focus, no-JS visibility.
+   Brand law unchanged: Rise Purple #7710D1 · Rise Blue #0170FD · Black #1A1A1A · Mist #E6E6E6
+   Alumni Sans (display) + Source Sans 3 (body). */
+
+:root{
+  --accent-ink:#0A5BCB;        /* blue TEXT on light: 5.0:1 on #E6E6E6, 6.5:1 on white */
+  --accent-on-dark:#6FB0FF;    /* blue TEXT on #1A1A1A: 7.7:1 */
+  --btn-blue:#0165E8;          /* button fill: white text 5.2:1 */
+  --muted:rgba(26,26,26,.80);
+  --muted-ivory:rgba(230,230,230,.86);
+}
+
+/* ---------- base type ---------- */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-size:1.0625rem;line-height:1.7;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal}
+h1,h2,h3{text-wrap:balance;letter-spacing:.004em}
+p,li,figcaption,blockquote{text-wrap:pretty}
+h2{font-size:clamp(2.05rem,4.7vw,3.15rem);line-height:1.08}
+h3{font-size:clamp(1.42rem,2.6vw,1.72rem);line-height:1.15}
+.lede{font-size:clamp(1.08rem,1.9vw,1.24rem);line-height:1.7;color:var(--muted)}
+
+/* ---------- labels: bigger, calmer tracking, readable colour ---------- */
+.eyebrow{font-size:.8125rem;font-weight:700;letter-spacing:.14em;color:var(--accent-ink)}
+.chip,.jtag,.jtime,.mchip,.lin-arch{font-size:.78rem;font-weight:700;letter-spacing:.1em}
+.chip,.jtag,.mchip{color:var(--accent-ink)}
+.jtime{color:var(--muted)}
+.svc-num,.mstep-k{font-size:.84rem;letter-spacing:.16em;color:var(--accent-ink)}
+.jread,.lin-read{font-size:.8rem;letter-spacing:.1em}
+.jread{color:var(--accent-ink)}
+.nav-links a{font-size:.95rem;color:var(--ink)}
+.nav-links a.nav-quiz{color:var(--accent-ink)}
+.nav-links a:hover{color:var(--accent-ink)}
+.nav-chip{font-size:.75rem;color:var(--accent-ink);padding:.18em .6em}
+.journal-note a,.faq-item .faq-a a,.faq-item summary::after,.credit-list a{color:var(--accent-ink)}
+.contact-place,.hero-place,.c-src{font-size:.82rem;letter-spacing:.14em}
+
+/* ---------- dark sections: lighter blue, stronger secondary text ---------- */
+.hero .eyebrow,#lineage .eyebrow,#why .eyebrow{color:rgba(230,230,230,.92)}
+.hero-place{color:rgba(230,230,230,.8)}
+.hero-scroll{font-size:.78rem;color:rgba(230,230,230,.78)}
+.qp-head{font-size:.78rem;color:rgba(230,230,230,.8)}
+.qp-head .live,.qp-tag,.qp-opt .k,#lineage .lin-read{color:var(--accent-on-dark)}
+.qp-tag{font-size:.78rem}
+.qp-opt{font-size:1rem}
+#lineage .lin-era{font-size:.8rem;color:rgba(230,230,230,.8)}
+#lineage .lin-arch{color:#fff;border-color:rgba(111,176,255,.6)}
+#lineage .c-src{color:rgba(230,230,230,.74)}
+#lineage .c-label,#lineage .lin-move,#why .pillar p{font-size:1rem;line-height:1.65}
+#lineage .lin-more{font-size:.88rem}
+/* light card variants (Lineage index page, journal) */
+.lin-era{font-size:.8rem;letter-spacing:.1em}
+.lin-arch{color:var(--accent-ink)}
+.lin-read{color:var(--accent-ink)}
+.lin-move{font-size:1rem}
+.method-note,.method-note a{font-size:.98rem}
+.method-note a{color:var(--accent-ink)}
+/* quiz + lineage hero: gradient title lighter on dark */
+.post-hero:not(.light) h1,.intro-card h1{background-image:linear-gradient(100deg,#4D9BFF 0%,#A66BFF 55%,#CFE2FF 100%)}
+.intro-card h1{font-size:clamp(2.2rem,5.8vw,3.3rem)}
+
+/* ---------- hero: headline was ink-on-ink (invisible); fix + scale ---------- */
+.hero h1{color:var(--ivory);font-size:clamp(2.7rem,7.4vw,5rem);line-height:1.04;letter-spacing:0;max-width:19ch}
+.hero h1 .grad-anim{background-image:linear-gradient(100deg,#4D9BFF 8%,#A66BFF 38%,#D6E6FF 55%,#4D9BFF 78%,#A66BFF 100%);padding-block-end:.06em}
+.hero-tag{font-size:clamp(1.12rem,2vw,1.3rem);color:var(--muted-ivory);max-width:50ch}
+.hero-logo{margin-block-end:1.6rem}
+
+/* ---------- buttons ---------- */
+.btn{font-size:1rem;font-weight:700;min-height:2.9rem;letter-spacing:.005em}
+.btn-accent{background:var(--btn-blue)}
+.btn-big{font-size:1.08rem;min-height:3.3rem}
+.nav-cta{font-size:.92rem;min-height:2.6rem}
+.btn-ghost{border-color:rgba(230,230,230,.85)}
+.mchip{padding:.62em 1.15em;min-height:2.4rem;display:inline-flex;align-items:center}
+
+/* ---------- cards ---------- */
+.svc p,.jcard p,.mstep p{font-size:1.02rem;line-height:1.68;color:var(--muted)}
+.mstep{align-content:start}
+.mstep p{max-width:36ch}
+.svc h3,.jcard h3,.mstep h3{font-size:clamp(1.5rem,2.6vw,1.75rem)}
+.pillar h3{font-size:1.02rem;letter-spacing:.1em}
+.faq-item summary{font-size:1.28rem;line-height:1.25;padding:1.25rem 1.5rem}
+.faq-item .faq-a{font-size:1.06rem}
+.spot-note{font-size:.95rem}
+
+/* ---------- about quote card: opening mark leads, text larger ---------- */
+.quote-card::after{content:none}
+.quote-card blockquote{font-size:clamp(1.8rem,3.6vw,2.4rem);line-height:1.22}
+.quote-card blockquote::before{content:"\201C";display:block;font-family:var(--font-display);font-size:4.6rem;line-height:.62;color:var(--accent-on-dark);margin-block-end:1.1rem}
+.quote-card figcaption{font-size:.84rem;letter-spacing:.14em;color:var(--accent-on-dark);margin-block-start:1.7rem}
+
+/* ---------- focus ---------- */
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--accent-ink);outline-offset:3px;border-radius:6px}
+.hero a:focus-visible,#lineage a:focus-visible,#why a:focus-visible,.footer a:focus-visible,.qp-card button:focus-visible{outline-color:var(--accent-on-dark)}
+.footer a{color:rgba(230,230,230,.92)}.footer-line{font-size:.95rem}
+
+/* ---------- content must show without JS ---------- */
+@media (scripting:none){.rv,.fade{opacity:1!important;transform:none!important}}
+
+/* ---------- small screens ---------- */
+@media(max-width:39.99rem){
+  body{font-size:1.04rem}
+  .hero h1{font-size:clamp(2.45rem,11.5vw,3.2rem)}
+  .eyebrow{font-size:.78rem;letter-spacing:.12em}
+  .btn-big{width:100%}
+  .hero-actions{width:100%}
+  .faq-item summary{font-size:1.18rem}
+}
+
+/* ---------- Arabic pages (dir=rtl / lang=ar) ---------- */
+:lang(ar){--font-display:"IBM Plex Sans Arabic","Noto Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;--font-body:"IBM Plex Sans Arabic","Noto Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif}
+:lang(ar) h1,:lang(ar) h2,:lang(ar) h3{letter-spacing:0;line-height:1.3;font-weight:700}
+:lang(ar){line-height:1.9}
+:lang(ar) .eyebrow,:lang(ar) .chip,:lang(ar) .btn{letter-spacing:0;text-transform:none}
+
+/* ---------- journal essays: hero is LIGHT (text was ivory-on-mist, invisible) ---------- */
+.post-hero.light .eyebrow{color:var(--accent-ink)}
+.post-hero.light .lede{color:var(--muted)}
+.post-hero.light .crumbs,.post-hero.light .crumbs a{color:var(--muted)}
+.post-hero.light .crumbs a{color:var(--accent-ink);text-decoration:underline;text-underline-offset:3px}
+.post-hero.light h1{background-image:linear-gradient(to top right,#0A5BCB 0%,#7710D1 100%)}
+.post-hero.light .chip,.post-hero.light .jtag{color:var(--accent-ink)}
+
+/* ---------- lineage pages & other dark bands: lighter blue text ---------- */
+.post-hero:not(.light) .chip,.post-hero:not(.light) .eyebrow,.post-hero:not(.light) .crumbs a{color:var(--accent-on-dark)}
+.post-hero:not(.light) .crumbs{color:rgba(230,230,230,.85)}
+.post-hero:not(.light) .chip{border-color:rgba(111,176,255,.55)}
+.stat-note{font-size:.78rem}
+figcaption,.portrait-card figcaption{font-size:.82rem}
+.credit-list li{font-size:.92rem}
+.stat-src,.alabel,.lineage-nav .dir,.stats-band .eyebrow{color:var(--accent-ink)}
+
+/* ---------- audit fixes (specificity-safe) ---------- */
+.nav-links a[aria-current="page"],.nav-links a.is-current{color:var(--accent-ink)}
+.hero-scroll{font-size:.78rem}
+.mstep .mchip{font-size:.8rem;color:var(--accent-ink);padding:.62em 1.15em}
+.cta-band .eyebrow{color:var(--accent-on-dark)}
+body .stat-note{color:var(--muted);font-size:.8rem}
+body .alabel{color:var(--accent-ink);font-size:.8rem}
+body .lineage-nav .dir{font-size:.8rem}
+.prose a{color:var(--accent-ink);text-decoration:underline;text-underline-offset:3px}
+
+/* quiz dark cards (intro + result) */
+.intro-card .n,.intro-card .chip,.arch-card .chip,.arch-card .eyebrow,.arch-card .n{color:var(--accent-on-dark)}
+.intro-card .chip,.arch-card .chip{border-color:rgba(111,176,255,.55);background:rgba(111,176,255,.08)}
+.intro-card .btn-outline,.arch-card .btn-outline{color:var(--ivory);border-color:rgba(230,230,230,.8)}
+.intro-card .btn-outline:hover,.arch-card .btn-outline:hover{color:#fff;border-color:var(--accent-on-dark)}
+
+/* index: Saudi icons sub-grid */
+.lin-sub{margin-block:3.2rem .35rem;font-size:clamp(1.6rem,3vw,2.1rem);color:var(--ivory)}
+.lin-sub-note{margin:0 0 1.5rem;color:var(--muted-ivory);font-size:1.02rem}
+@media(min-width:64rem){.lin-grid-2{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- WhatsApp float + footer links + markets grid + shared FAQ ---------- */
+.wa-float{position:fixed;inset-block-end:1rem;inset-inline-end:1rem;z-index:60;display:inline-flex;align-items:center;gap:.55rem;min-height:3.5rem;padding:.55rem;border-radius:999px;background:#128C7E;color:#fff;text-decoration:none;font-weight:700;font-size:.95rem;box-shadow:0 14px 30px -12px rgba(0,0,0,.55);transition:transform .25s var(--ease),box-shadow .25s ease,background .25s ease}
+.wa-float svg{flex:none;inline-size:2.4rem;block-size:2.4rem;padding:.25rem}
+.wa-float .wa-label{display:none;padding-inline-end:.9rem}
+.wa-float:hover{background:#0E7468;transform:translateY(-3px);box-shadow:0 20px 38px -14px rgba(0,0,0,.6)}
+.wa-float:focus-visible{outline:3px solid #fff;outline-offset:3px;box-shadow:0 0 0 6px #128C7E}
+@media(min-width:40rem){.wa-float .wa-label{display:inline}}
+@media print{.wa-float{display:none}}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem 1.6rem;margin-block:.3rem .2rem}
+.footer-links a{color:rgba(230,230,230,.92);text-decoration:underline;text-decoration-color:rgba(230,230,230,.35);text-underline-offset:4px;font-size:.95rem}
+.footer-links a:hover{color:#fff;text-decoration-color:var(--accent-on-dark)}
+.markets-grid{display:grid;gap:1.25rem;margin-block-start:2.75rem}
+.markets-grid .svc{display:block;text-decoration:none;color:var(--ink)}
+.markets-grid .svc h3{color:var(--ink)}
+@media(min-width:56rem){.markets-grid{grid-template-columns:repeat(3,1fr)}}
+.faq-list{display:grid;gap:1rem}
+.faq-item{background:var(--paper-2,#fff);border:1px solid var(--line,rgba(26,26,26,.13));border-radius:1.1rem}
+.faq-item[open]{border-color:var(--accent-line,rgba(1,112,253,.38))}
+.faq-item summary{display:flex;justify-content:space-between;align-items:center;gap:1rem;list-style:none;cursor:pointer}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"+";color:var(--accent-ink);font-size:1.45rem;line-height:1;transition:transform .25s ease}
+.faq-item[open] summary::after{transform:rotate(45deg)}
+.prose .faq-item summary{font-family:var(--font-display);font-size:1.22rem;line-height:1.25;padding:1.15rem 1.4rem;color:var(--ink)}
+.prose .faq-item .faq-a{margin:0;padding:0 1.4rem 1.25rem;color:var(--muted)}
+.hero h1{max-width:24ch}
+.c-value{font-variant-numeric:normal;letter-spacing:0}
+.markets-grid .jread{text-transform:none;letter-spacing:0;font-size:1rem;margin-block-start:1rem}
+@media(max-width:26rem){.nav-inner{gap:.5rem}.nav-cta{padding-inline:.95rem;font-size:.88rem}.wordmark img{block-size:2.9rem}}
+.post-hero h1{font-size:clamp(2.6rem,6.2vw,4.2rem);line-height:1.04;letter-spacing:0}
+.prose h2{font-size:clamp(1.65rem,3.3vw,2.15rem);line-height:1.12;margin-block-start:1.6em}
+.prose h2:first-child{margin-block-start:0}
+.prose li{margin-block-end:.4em}
+.prose ul,.prose ol{padding-inline-start:1.3rem}
+.answer-box .alabel{color:var(--accent-ink);font-size:.8rem}
+.lesson-box .alabel{color:var(--accent-ink);font-size:.8rem}
+.wa-float{background:#0F766E}
+.wa-float:hover{background:#0B5F58}
+.wa-float:focus-visible{box-shadow:0 0 0 6px #0F766E}
