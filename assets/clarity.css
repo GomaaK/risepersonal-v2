@@ -275,5 +275,3 @@ body .lineage-nav .dir{font-size:.8rem}
 .story p{margin:0 0 .9rem;line-height:1.65;color:var(--muted)}
 .story .story-meta{margin:0;font-size:.88rem;font-weight:600;color:rgba(26,26,26,.7)}
 .story-foot{text-align:center;margin:2rem auto 0;max-width:42rem;font-size:1.05rem;color:var(--muted)}
-@media(min-width:56rem) and (max-width:79.99rem){.story-grid .story:nth-child(3){grid-column:1/-1}}
-@media(min-width:80rem){.story-grid{grid-template-columns:repeat(3,1fr)}}
