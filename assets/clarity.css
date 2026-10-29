@@ -278,3 +278,14 @@ body .lineage-nav .dir{font-size:.8rem}
 
 .story-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:1.25rem}
 .story-grid .story{flex:1 1 20rem;max-inline-size:34rem}
+
+/* ============ FOUNDER ============ */
+#founder{padding-block:clamp(4rem,9vw,7rem)}
+.founder-grid{display:grid;gap:2.5rem;align-items:center}
+@media(min-width:56rem){.founder-grid{grid-template-columns:.8fr 1.2fr;gap:4.5rem}}
+.founder-photo{margin:0;border-radius:1.4rem;overflow:hidden;background:var(--ink);box-shadow:0 30px 60px -36px rgba(26,26,26,.6);max-inline-size:26rem;justify-self:center}
+.founder-photo img{display:block;inline-size:100%;block-size:auto}
+.founder-facts{list-style:none;margin:1.5rem 0 2rem;padding:0;display:grid;gap:.85rem}
+.founder-facts li{position:relative;padding-inline-start:1.6rem;line-height:1.55}
+.founder-facts li::before{content:"";position:absolute;inset-inline-start:0;inset-block-start:.6em;inline-size:.7rem;block-size:.7rem;border-radius:50%;background:var(--grad)}
+.founder-facts strong{color:var(--ink)}
