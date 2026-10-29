@@ -275,3 +275,6 @@ body .lineage-nav .dir{font-size:.8rem}
 .story p{margin:0 0 .9rem;line-height:1.65;color:var(--muted)}
 .story .story-meta{margin:0;font-size:.88rem;font-weight:600;color:rgba(26,26,26,.7)}
 .story-foot{text-align:center;margin:2rem auto 0;max-width:42rem;font-size:1.05rem;color:var(--muted)}
+
+.story-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:1.25rem}
+.story-grid .story{flex:1 1 20rem;max-inline-size:34rem}
