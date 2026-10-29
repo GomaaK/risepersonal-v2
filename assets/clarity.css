@@ -264,3 +264,14 @@ body .lineage-nav .dir{font-size:.8rem}
 .redact-row.ok{border-block-end:0}
 .redact-row .rv-txt{font-weight:700;color:var(--accent-ink);font-size:1.05rem}
 .redact figcaption{margin-block-start:1.25rem;font-size:.95rem;line-height:1.6;color:var(--muted)}
+
+.stories{margin-block-start:3.5rem}
+.stories .eyebrow{margin-block-end:1.5rem}
+.story-grid{display:grid;gap:1.25rem}
+@media(min-width:56rem){.story-grid{grid-template-columns:1fr 1fr}}
+.story{background:#fff;border:1px solid var(--line);border-radius:1.25rem;padding:1.75rem;box-shadow:0 22px 44px -34px rgba(26,26,26,.45)}
+.story-tag{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);background:rgba(10,91,203,.09);border-radius:999px;padding:.3rem .8rem;margin-block-end:1rem}
+.story h3{margin:0 0 .75rem;color:var(--ink)}
+.story p{margin:0 0 .9rem;line-height:1.65;color:var(--muted)}
+.story .story-meta{margin:0;font-size:.88rem;font-weight:600;color:rgba(26,26,26,.7)}
+.story-foot{text-align:center;margin:2rem auto 0;max-width:42rem;font-size:1.05rem;color:var(--muted)}
